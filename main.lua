@@ -1,18 +1,17 @@
 -- VSCode Debug Config
-if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
-  require("lldebugger").start()
+if os.getenv('LOCAL_LUA_DEBUGGER_VSCODE') == '1' then
+  require('lldebugger').start()
 end
 
-SCREEN_WIDTH = 667
-SCREEN_HEIGHT = 375
+GAME_STATE = 'initial' -- playing, dead
 CURRENT_DISTANCE = 0
 PIPE_WIDTH = 50
 PIPE_SEPARATION = 100
 PIPE_DISTANCE = 200
 
-require("Ground")
-require("Pipe")
-require("Player")
+require('Ground')
+require('Pipe')
+require('Player')
 
 local world
 local player = {}
@@ -32,6 +31,9 @@ function createPipes(quantity)
 
   table.insert(pipes, topPipe)
   table.insert(pipes, bottomPipe)
+end
+function death()
+  GAME_STATE = 'dead'
 end
 
 function love.load()
@@ -79,6 +81,5 @@ function love.draw()
   player:draw()
 
   -- Debug
-  love.graphics.print("distance: " .. CURRENT_DISTANCE, 10)
-  love.graphics.print("pipes: " .. #pipes, 10, 30)
+  love.graphics.print('Points: ' .. GAME_POINTS)
 end
